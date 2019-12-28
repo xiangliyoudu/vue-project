@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
         // 跨域请求配置
         '/api': {
-            target: 'http://localhost:8000/vueserver',//后端接口地址
+            target: 'http://localhost:8089/myshop',//后端接口地址
             changeOrigin: true,//是否允许跨越
             pathRewrite: {
                 '^/api': '',//重写,
