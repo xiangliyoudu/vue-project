@@ -1,0 +1,113 @@
+<template >
+  <Form :model="good" :label-width="80" inline  class="goodAdd" ref="formValidate" :rules="ruleValidate" >
+    <FormItem label="产品类型" prop="type">
+      <Input type="text" v-model="good.type" placeholder="产品类型" />
+    </FormItem>
+    <FormItem label="产品图片">
+      <Input type="text" v-model="good.picture" placeholder="产品图片" />
+    </FormItem>
+    <FormItem label="产品名称">
+      <Input type="text" v-model="good.pname" placeholder="产品名称" />
+    </FormItem>
+    <FormItem label="产品规格">
+      <Input type="text" v-model="good.spec" placeholder="产品规格" />
+    </FormItem>
+    <FormItem label="进货总量">
+      <Input type="number" v-model="good.totalNumber" placeholder="进货总量" />
+    </FormItem>
+    <FormItem label="进货单价">
+      <Input type="number" v-model="good.price" placeholder="进货单价" />
+    </FormItem>
+    <FormItem label="进货总价">
+      <Input type="number" v-model="good.totalPrice" placeholder="进货总价" />
+    </FormItem>
+    <FormItem label="运费">
+      <Input type="number" v-model="good.fee" placeholder="运费" />
+    </FormItem>
+    <FormItem label="售价">
+      <Input type="number" v-model="good.sellPrice" placeholder="售价" />
+    </FormItem>
+    <FormItem label="促销价">
+      <Input type="number" v-model="good.salePrice" placeholder="促销价" />
+    </FormItem>
+    <FormItem label="优惠活动">
+      <Input type="text" v-model="good.activities" placeholder="优惠活动" />
+    </FormItem>
+    <FormItem label="剩余库存">
+      <Input type="number" v-model="good.stock" placeholder="剩余库存" />
+    </FormItem>
+    <FormItem label="备注">
+      <Input type="text" v-model="good.remarks" placeholder="备注" />
+    </FormItem>
+    <FormItem label="仓库">
+      <Input type="text" v-model="good.storehouse" placeholder="仓库" />
+    </FormItem>
+    <FormItem>
+      <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
+      <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+    </FormItem>
+  </Form>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      good: {
+        type: "",
+        picture: "",
+        pname: "",
+        spec: "",
+        totalNumber: 0,
+        price: 0.0,
+        totalPrice: 0.0,
+        fee: 0.0,
+        sellPrice: 0.0,
+        salePrice: 0.0,
+        activities: "",
+        stock: 0,
+        remarks: "",
+        storehouse: ""
+      },
+      ruleValidate: {
+        type: [
+          {
+            required: true,
+            message: "产品类型不能为空",
+            trigger: "blur"
+          }
+        ]
+      }
+    };
+  },
+  methods: {
+    handleSubmit(name) {
+      this.$refs[name].validate(valid => {
+        if (valid) {
+          let url = "/api/good/addOne";
+          // 通过http获取资源
+          this.$http.post(url, {...this.good}, { emulateJSON: true }).then(res => {
+            let body = res.body;
+            if(body) {
+              this.$Message.success("添加成功!");
+              this.$router.push({path: '/'});
+            }else{
+              this.$Message.success("添加失败!");
+            }
+          });
+        } else {
+          this.$Message.error("输入参数有误!");
+        }
+      });
+    },
+    handleReset(name) {
+      this.$refs[name].resetFields();
+    }
+  }
+};
+</script>
+<style scoped>
+.goodAdd {
+  width: 60%;
+  margin: 10px auto;
+}
+</style>
