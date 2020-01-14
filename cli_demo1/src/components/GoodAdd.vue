@@ -103,7 +103,21 @@
                         // 包含文件的表单对象
                         let formData = new FormData();
                         formData.append("picFile", this.file);
-                        formData.append("good", this.good);
+                        formData.append("type", this.good.type);
+                        formData.append("picture", this.good.picture);
+                        formData.append("pname", this.good.pname);
+                        formData.append("spec", this.good.spec);
+                        formData.append("totalNumber", this.good.totalNumber);
+                        formData.append("price", this.good.price);
+                        formData.append("totalPrice", this.good.totalPrice);
+                        formData.append("fee", this.good.fee);
+                        formData.append("sellPrice", this.good.sellPrice);
+                        formData.append("salePrice", this.good.salePrice);
+                        formData.append("activities", this.good.activities);
+                        formData.append("stock", this.good.stock);
+                        formData.append("remarks", this.good.remarks);
+                        formData.append("storehouse", this.good.storehouse);
+
                         // 通过http获取资源
                         this.$http.post(url, formData).then(res => {
                             let body = res.body;
