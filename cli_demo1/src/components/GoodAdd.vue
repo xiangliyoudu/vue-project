@@ -7,52 +7,52 @@
     <!-- <FormItem label="产品图片">
       <Input type="text" v-model="good.picture" placeholder="产品图片" />
     </FormItem> -->
-    <FormItem label="产品名称">
+    <FormItem label="产品名称" prop="pname">
       <Input type="text" v-model="good.pname" placeholder="产品名称"/>
     </FormItem>
-    <FormItem label="产品规格">
+    <FormItem label="产品规格" prop="spec">
       <Input type="text" v-model="good.spec" placeholder="产品规格"/>
     </FormItem>
-    <FormItem label="进货总量">
-      <Input type="number" v-model="good.totalNumber" placeholder="进货总量"/>
+    <FormItem label="进货总量" prop="totalNumber">
+      <InputNumber v-model="good.totalNumber" :min="0" placeholder="进货总量" class="number"/>
     </FormItem>
-    <FormItem label="进货单价">
-      <Input type="number" v-model="good.price" placeholder="进货单价"/>
+    <FormItem label="进货单价" prop="price">
+      <InputNumber type="number" v-model="good.price" :min="0" placeholder="进货单价" class="number"/>
     </FormItem>
-    <FormItem label="进货总价">
-      <Input type="number" v-model="good.totalPrice" placeholder="进货总价"/>
+    <FormItem label="进货总价" prop="totalPrice">
+      <InputNumber type="number" v-model="good.totalPrice" :min="0" placeholder="进货总价" class="number"/>
     </FormItem>
-    <FormItem label="运费">
-      <Input type="number" v-model="good.fee" placeholder="运费"/>
+    <FormItem label="运费" prop="fee">
+      <InputNumber type="number" v-model="good.fee" :min="0" placeholder="运费" class="number"/>
     </FormItem>
-    <FormItem label="售价">
-      <Input type="number" v-model="good.sellPrice" placeholder="售价"/>
+    <FormItem label="售价" prop="sellPrice">
+      <InputNumber type="number" v-model="good.sellPrice" :min="0" placeholder="售价" class="number"/>
     </FormItem>
-    <FormItem label="促销价">
-      <Input type="number" v-model="good.salePrice" placeholder="促销价"/>
+    <FormItem label="促销价" prop="salePrice">
+      <InputNumber type="number" v-model="good.salePrice" :min="0" placeholder="促销价" class="number"/>
     </FormItem>
-    <FormItem label="优惠活动">
+    <FormItem label="优惠活动" prop="activities">
       <Input type="text" v-model="good.activities" placeholder="优惠活动"/>
     </FormItem>
-    <FormItem label="剩余库存">
-      <Input type="number" v-model="good.stock" placeholder="剩余库存"/>
+    <FormItem label="剩余库存" prop="stock">
+      <InputNumber type="number" v-model="good.stock" :min="0" placeholder="剩余库存" class="number"/>
     </FormItem>
-    <FormItem label="备注">
+    <FormItem label="备注" prop="remarks">
       <Input type="text" v-model="good.remarks" placeholder="备注"/>
     </FormItem>
-    <FormItem label="仓库">
+    <FormItem label="仓库" prop="storehouse">
       <Input type="text" v-model="good.storehouse" placeholder="仓库"/>
     </FormItem>
-    <FormItem label="产品图片" style="width:200px;">
+    <FormItem label="产品图片">
       <Upload :before-upload="handleUpload" action="/api/good/uploadPic">
-        <Button icon="ios-cloud-upload-outline">选择文件</Button>
+        <Button icon="ios-cloud-upload-outline" class="number">{{fileShortName}}</Button>
       </Upload>
-      <span v-if="file !== null">
-        {{ file.name }}
-<!--        <Button type="text" @click="upload" :loading="loadingStatus">-->
-<!--          {{ loadingStatus ? 'Uploading' : '点击上传' }}-->
-<!--        </Button>-->
-      </span>
+<!--            <span v-if="file !== null">-->
+<!--              {{ file.name }}-->
+<!--              <Button type="text" @click="upload" :loading="loadingStatus">-->
+<!--                {{ loadingStatus ? 'Uploading' : '点击上传' }}-->
+<!--              </Button>-->
+<!--            </span>-->
     </FormItem>
     <FormItem>
       <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
@@ -88,12 +88,45 @@
                             message: "产品类型不能为空",
                             trigger: "blur"
                         }
-                    ]
+                    ],
+                    pname: [
+                        {
+                            required: true,
+                            message: "产品名称不能为空",
+                            trigger: "blur"
+                        }
+                    ],
+                    spec: [
+                        {
+                            required: true,
+                            message: "产品规格不能为空",
+                            trigger: "blur"
+                        }
+                    ],
+                    totalNumber: [
+                        {required: true}
+                    ],
+
                 },
                 file: null,
                 loadingStatus: false,
 
             };
+        },
+        computed: {
+            fileShortName: function () {
+                let shortName = '选择文件';
+
+                if (this.file) {
+                    let fName = this.file.name;
+                    if (fName.length > 10) {
+                        shortName = fName.substring(0, 4) + '...' + fName.substring(fName.length - 6);
+                    } else {
+                        shortName = this.file.name;
+                    }
+                }
+                return shortName;
+            },
         },
         methods: {
             handleSubmit(name) {
@@ -180,5 +213,9 @@
   .goodAdd {
     width: 60%;
     margin: 10px auto;
+  }
+
+  .number {
+    width: 186px;
   }
 </style>
