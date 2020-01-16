@@ -160,10 +160,10 @@
                                 this.$Message.success("添加成功!");
                                 this.$router.push({path: '/'});
                             } else {
-                                this.$Message.success("添加失败!");
+                                this.$Message.error("添加失败!");
                             }
                         }).catch(err => {
-                            this.$Message.error('上传失败');
+                            this.$Message.error('添加失败');
                         });
                     } else {
                         this.$Message.error("输入参数有误!");
