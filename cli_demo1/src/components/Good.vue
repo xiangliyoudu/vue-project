@@ -132,7 +132,7 @@
                 let params = {id: id};
                 this.$http.delete(url, {params: params}).then(res => {
                     // console.log(res);
-                    if (res && res > 0) {
+                    if (res && res.body > 0) {
                         this.$Message.success('删除成功');
                         this.listData();
                     } else {
