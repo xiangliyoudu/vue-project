@@ -20,9 +20,10 @@
             return {
                 columns1: [
                     {
-                        title: "序号",
-                        key: "id",
-                        width: "65px"
+                        title: '序号',
+                        type: 'index',
+                        width: 80,
+                        align: 'center'
                     },
                     {
                         title: "产品类型",

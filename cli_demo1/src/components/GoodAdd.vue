@@ -47,12 +47,12 @@
       <Upload :before-upload="handleUpload" action="/api/good/uploadPic">
         <Button icon="ios-cloud-upload-outline" class="number">{{fileShortName}}</Button>
       </Upload>
-<!--            <span v-if="file !== null">-->
-<!--              {{ file.name }}-->
-<!--              <Button type="text" @click="upload" :loading="loadingStatus">-->
-<!--                {{ loadingStatus ? 'Uploading' : '点击上传' }}-->
-<!--              </Button>-->
-<!--            </span>-->
+      <!--            <span v-if="file !== null">-->
+      <!--              {{ file.name }}-->
+      <!--              <Button type="text" @click="upload" :loading="loadingStatus">-->
+      <!--                {{ loadingStatus ? 'Uploading' : '点击上传' }}-->
+      <!--              </Button>-->
+      <!--            </span>-->
     </FormItem>
     <FormItem>
       <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
@@ -135,7 +135,9 @@
                         let url = "/api/good/addOne";
                         // 包含文件的表单对象
                         let formData = new FormData();
-                        formData.append("picFile", this.file);
+                        if (this.file) {
+                            formData.append("picFile", this.file);
+                        }
                         formData.append("type", this.good.type);
                         formData.append("picture", this.good.picture);
                         formData.append("pname", this.good.pname);
