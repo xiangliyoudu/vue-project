@@ -3,13 +3,8 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3 appheader">
         <TodoHeader :addTodo="addTodo" />
-        <TodoList :todos="todos" :deleteTodo="deleteTodo"/>
-        <TodoFooter
-          :todosLength="todosLength"
-          :checkedTodosLength="checkedTodosLength"
-          :clearTodos="clearTodos"
-          :checkAll="checkAll"
-        />
+        <TodoList :todos="todos" :deleteTodo="deleteTodo" />
+        <TodoFooter :todos="todos" :checkAll="checkAll" :deleteCheckedTodos="deleteCheckedTodos" />
       </div>
     </div>
   </div>
@@ -25,22 +20,21 @@ export default {
   components: { TodoHeader, TodoList, TodoFooter },
   data() {
     return {
-      todos: [
-        { checked: false, content: "aaa" },
-        { checked: true, content: "bbb" },
-        { checked: false, content: "ccc" }
-      ]
+      // 从localstorage读取todos
+      todos: JSON.parse(window.localStorage.getItem("todos_key") || "[]")
     };
   },
-  computed: {
-    todosLength() {
-      return this.todos.length;
-    },
-    checkedTodos() {
-      return this.todos.filter(item => item.checked);
-    },
-    checkedTodosLength() {
-      return this.checkedTodos.length;
+  watch: {
+    todos: {
+      // 如果 `todos` 发生改变，这个函数就会运行
+      handler: function(newtodos) {
+        // 将新的 json 值保存在localstorage中
+        window.localStorage.setItem("todos_key", JSON.stringify(newtodos));
+      },
+      // 该回调将会在侦听开始之后被立即调用
+      immediate: true,
+      // 深度监听
+      deep: true
     }
   },
   methods: {
@@ -50,8 +44,8 @@ export default {
     deleteTodo(index) {
       this.todos.splice(index, 1);
     },
-    clearTodos() {
-      this.todos.splice(0, this.todosLength);
+    deleteCheckedTodos() {
+      this.todos = this.todos.filter(item => !item.checked);
     },
     checkAll(flag) {
       this.todos = this.todos.map(todo => ({

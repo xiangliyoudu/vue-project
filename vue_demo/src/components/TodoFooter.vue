@@ -2,12 +2,10 @@
   <div>
     <div class="checkbox">
       <label>
-        <input type="checkbox" @change="switchAll" :checked="checkAllStatus" :disabled="!isEnable" />
+        <input type="checkbox" v-model="isChecked" :disabled="disabled" />
       </label>
-      已选择 {{checkedTodosLength}} / 全部 {{todosLength}}
-      <button
-        class="btn btn-danger"
-        @click="clearTodos"
+      已选择 {{checkedTodosLength}} / 全部 {{todos.length}}
+      <button class="btn btn-danger" @click="deleteCheckedTodos" v-show="checkedTodosLength"
       >clear</button>
     </div>
   </div>
@@ -16,15 +14,11 @@
 <script>
 export default {
   props: {
-    todosLength: {
-      Number,
+    todos: {
+      Array,
       required: true
     },
-    checkedTodosLength: {
-      Number,
-      required: true
-    },
-    clearTodos: {
+    deleteCheckedTodos: {
       Function,
       required: true
     },
@@ -37,18 +31,22 @@ export default {
     return {};
   },
   computed: {
-    checkAllStatus() {
-      let { todosLength, checkedTodosLength } = this;
-      return todosLength > 0 && todosLength === checkedTodosLength;
+    checkedTodosLength() {
+      return this.todos.filter(todo => todo.checked).length;
     },
-    isEnable() {
-      return this.todosLength > 0;
-    }
-  },
-  methods: {
-    switchAll() {
-      this.checkAll(!this.checkAllStatus);
-    }
+    isChecked: {
+      set(checked) {
+        this.checkAll(checked);
+      },
+      get() {
+        return (
+          this.checkedTodosLength > 0 && this.todos.length === this.checkedTodosLength
+        );
+      }
+    },
+    disabled() {
+      return this.todos.length === 0;
+    },
   }
 };
 </script>
