@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3 appheader">
         <TodoHeader :addTodo="addTodo" />
-        <TodoList :todos="todos" />
+        <TodoList :todos="todos" :deleteTodo="deleteTodo"/>
         <TodoFooter
           :todosLength="todosLength"
           :checkedTodosLength="checkedTodosLength"
@@ -46,6 +46,9 @@ export default {
   methods: {
     addTodo(todo) {
       this.todos.unshift(todo);
+    },
+    deleteTodo(index) {
+      this.todos.splice(index, 1);
     },
     clearTodos() {
       this.todos.splice(0, this.todosLength);
