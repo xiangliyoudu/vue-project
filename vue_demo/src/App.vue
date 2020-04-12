@@ -1,60 +1,69 @@
 <template>
-  <div>
-    <header class="site-header jumbotron">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1>请发表评论</h1>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <div class="container">
-      <div class="row">
-        <CommentAdd :addComment="addComment" />
-        <CommentList :comments="comments" :deleteComment="deleteComment" />
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 appheader">
+        <TodoHeader :addTodo="addTodo" />
+        <TodoList :todos="todos" />
+        <TodoFooter
+          :todosLength="todosLength"
+          :checkedTodosLength="checkedTodosLength"
+          :clearTodos="clearTodos"
+          :checkAll="checkAll"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CommentList from "./components/Comment-List.vue";
-import CommentAdd from "./components/Comment-Add.vue";
+import TodoHeader from "./components/TodoHeader.vue";
+import TodoList from "./components/TodoList.vue";
+import TodoFooter from "./components/TodoFooter.vue";
 
 export default {
   name: "App",
-  components: {
-    CommentList,
-    CommentAdd
-  },
+  components: { TodoHeader, TodoList, TodoFooter },
   data() {
     return {
-      comments: []
+      todos: [
+        { checked: false, content: "aaa" },
+        { checked: true, content: "bbb" },
+        { checked: false, content: "ccc" }
+      ]
     };
   },
-  methods: {
-    addComment(comment) {
-      this.comments.unshift(comment);
+  computed: {
+    todosLength() {
+      return this.todos.length;
     },
-    deleteComment(index) {
-      this.comments.splice(index, 1);
+    checkedTodos() {
+      return this.todos.filter(item => item.checked);
+    },
+    checkedTodosLength() {
+      return this.checkedTodos.length;
     }
   },
-  mounted() {
-    this.timerId = setTimeout(() => {
-      this.comments = [
-        { user: "mike", content: "you are beautiful" },
-        { user: "lucy", content: "yeah, you are right ^_^" }
-      ];
-    }, 1000);
-  },
-  beforeDestroy() {
-    clearTimeout(this.timerId);
+  methods: {
+    addTodo(todo) {
+      this.todos.unshift(todo);
+    },
+    clearTodos() {
+      this.todos.splice(0, this.todosLength);
+    },
+    checkAll(flag) {
+      this.todos = this.todos.map(todo => ({
+        checked: flag,
+        content: todo.content
+      }));
+    }
   }
 };
 </script>
 
 <style>
+.appheader {
+  border: 1px solid;
+  padding: 5px;
+  margin-top: 100px;
+}
 </style>
