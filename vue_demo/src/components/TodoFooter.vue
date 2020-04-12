@@ -46,7 +46,7 @@ export default {
     }
   },
   methods: {
-    switchAll(flag) {
+    switchAll() {
       window.console.log(this.checkAllStatus);
       this.checkAll(!this.checkAllStatus);
     }

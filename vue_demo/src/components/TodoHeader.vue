@@ -1,7 +1,13 @@
 <template>
   <form class="form-inline">
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="enter ..." v-model="content" />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="enter ..."
+        v-model.trim="content"
+        @keyup.enter="handleInput"
+      />
     </div>
     <input type="submint" value="Add" class="btn btn-default" @click="saveTodo" />
   </form>
@@ -23,12 +29,17 @@ export default {
   methods: {
     saveTodo(e) {
       e.preventDefault();
-      if (this.content.trim() === "") {
+      if (this.content === "") {
         return;
       }
       let todo = { checked: false, content: this.content };
       this.addTodo(todo);
-      this.content = '';
+      this.content = "";
+    },
+    handleInput() {
+      let todo = { checked: false, content: this.content };
+      this.addTodo(todo);
+      this.content = "";
     }
   }
 };
