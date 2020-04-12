@@ -38,14 +38,15 @@ export default {
     };
   },
   methods: {
-    add: function(e) {
+    add(e) {
       e.preventDefault();
-      if (this.user.trim() === "" || this.content.trim() === "") {
+      let {user, content} = this;
+      if (user.trim() === "" || content.trim() === "") {
         return;
       }
       let comment = {};
-      comment.user = this.user;
-      comment.content = this.content;
+      comment.user = user;
+      comment.content = content;
       this.addComment(comment);
       this.user = "";
       this.content = "";

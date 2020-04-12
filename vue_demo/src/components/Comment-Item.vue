@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    handleDelete: function(index) {
+    handleDelete(index) {
       this.deleteComment(index);
     }
   }

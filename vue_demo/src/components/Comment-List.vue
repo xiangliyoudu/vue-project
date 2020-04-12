@@ -33,8 +33,9 @@ export default {
     }
   },
   computed: {
-    isShow: function() {
-      let commentsLength = this.comments.length;
+    isShow() {
+      let {comments} = this;
+      let commentsLength = comments.length;
       return commentsLength > 0 ? false : true;
     }
   }

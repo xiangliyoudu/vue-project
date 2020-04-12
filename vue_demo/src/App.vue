@@ -35,10 +35,10 @@ export default {
     };
   },
   methods: {
-    addComment: function(comment) {
+    addComment(comment) {
       this.comments.unshift(comment);
     },
-    deleteComment: function(index) {
+    deleteComment(index) {
       this.comments.splice(index, 1);
     }
   },
