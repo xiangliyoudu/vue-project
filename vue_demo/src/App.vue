@@ -31,10 +31,7 @@ export default {
   },
   data() {
     return {
-      comments: [
-        { user: "mike", content: "you are beautiful" },
-        { user: "lucy", content: "yeah, you are right ^_^" }
-      ]
+      comments: []
     };
   },
   methods: {
@@ -44,6 +41,17 @@ export default {
     deleteComment: function(index) {
       this.comments.splice(index, 1);
     }
+  },
+  mounted() {
+    this.timerId = setTimeout(() => {
+      this.comments = [
+        { user: "mike", content: "you are beautiful" },
+        { user: "lucy", content: "yeah, you are right ^_^" }
+      ];
+    }, 1000);
+  },
+  beforeDestroy() {
+    clearTimeout(this.timerId);
   }
 };
 </script>
