@@ -3,7 +3,13 @@
     <h3 class="reply">评论回复：</h3>
     <h2 v-if="isShow">暂无评论，点击左侧添加评论！！！</h2>
     <ul v-else class="list-group">
-      <CommentItem :comments="comments" :deleteComment="deleteComment" />
+      <CommentItem
+        v-for="(comment,index) in comments"
+        :comment="comment"
+        :key="index"
+        :deleteComment="deleteComment"
+        :index="index"
+      />
     </ul>
   </div>
 </template>

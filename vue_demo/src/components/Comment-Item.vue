@@ -1,6 +1,6 @@
 <template>
   <div>
-    <li class="list-group-item" v-for="(comment,index) in comments" :key="index">
+    <li class="list-group-item">
       <div class="handle">
         <button @click="handleDelete(index)">delete</button>
         <p class="user">
@@ -17,8 +17,12 @@
 export default {
   name: "CommentItem",
   props: {
-    comments: {
-      Array,
+    comment: {
+      Object,
+      required: true
+    },
+    index: {
+      Number,
       required: true
     },
     deleteComment: {
